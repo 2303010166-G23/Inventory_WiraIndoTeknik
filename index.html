@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Manajemen Inventaris - PT Wira Indo Teknik</title>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- APP -->
+<!-- ============================================================ -->
+<div class="app" id="app">
+
+    <!-- ==================== SIDEBAR ==================== -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            PT Wira Indo<span>Teknik</span>
+            <small>Sistem Manajemen Inventaris</small>
+        </div>
+
+        <ul class="sidebar-menu">
+            <li><a class="active" data-page="dashboard"><i class="fas fa-th-large"></i> <span>Dashboard</span></a></li>
+            <li><a data-page="barang-masuk"><i class="fas fa-arrow-down"></i> <span>Barang Masuk</span></a></li>
+            <li><a data-page="barang-keluar"><i class="fas fa-arrow-up"></i> <span>Barang Keluar</span></a></li>
+            <li><a data-page="supplier"><i class="fas fa-truck"></i> <span>Supplier</span></a></li>
+            <li><a data-page="laporan"><i class="fas fa-file-alt"></i> <span>Laporan</span></a></li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> <span>Log Out</span></a>
+        </div>
+    </aside>
+
+    <!-- ==================== MAIN ==================== -->
+    <main class="main" id="mainContent">
+
+        <!-- Admin widget (global) -->
+        <div class="admin-widget" id="adminWidget">
+            <div class="admin-menu" id="adminMenu">
+                <a href="#" id="adminProfileBtn"><i class="fas fa-id-badge"></i> Profil Saya</a>
+                <a href="#" id="adminChangePwdBtn"><i class="fas fa-key"></i> Ubah Password</a>
+                <a href="#" id="adminSettingsBtn"><i class="fas fa-cog"></i> Pengaturan</a>
+                <a href="#" id="adminLogoutBtn"><i class="fas fa-sign-out-alt"></i> Keluar</a>
+            </div>
+        </div>
+
+        <!-- ====== PAGE: LOGIN ====== -->
+        <div class="page-section active" id="page-login">
+            <div class="login-page">
+                <div class="login-box">
+                    <div class="logo">
+                        <h2>PT Wira Indo<span>Teknik</span></h2>
+                        <p>Sistem Manajemen Inventaris Barang</p>
+                    </div>
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label>Username</label>
+                            <input type="text" id="loginUsername" placeholder="Masukkan username">
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" id="loginPassword" placeholder="Masukkan password">
+                        </div>
+                        <div class="form-options">
+                            <label><input type="checkbox" checked> Ingat Saya</label>
+                            <a href="#">Lupa Password ?</a>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Masuk</button>
+                        <div class="footer-text">© 2026 - TI G23 UNPER</div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== PAGE: DASHBOARD ====== -->
+        <div class="page-section" id="page-dashboard">
+            <div class="page-header">
+                <h1>Dashboard <small>PT Wira Indo Teknik</small></h1>
+                <div class="user-badge"><i class="fas fa-user-circle"></i> Admin</div>
+            </div>
+
+            <div class="stats-grid" id="statsGrid">
+                <div class="stat-card large">
+                    <div class="icon"><i class="fas fa-boxes"></i></div>
+                    <div class="info"><h4>Stok TerkinI</h4><div class="number" id="statStok">0</div></div>
+                </div>
+                <div class="stat-card small">
+                    <div class="icon" style="background: rgba(46, 125, 50, 0.14); color: #2e7d32;"><i class="fas fa-arrow-down"></i></div>
+                    <div class="info"><h4>Barang Masuk</h4><div class="number" id="statMasuk">0</div></div>
+                </div>
+                <div class="stat-card small">
+                    <div class="icon" style="background: rgba(255, 178, 89, 0.15); color: #fb8c00;"><i class="fas fa-arrow-up"></i></div>
+                    <div class="info"><h4>Barang Keluar</h4><div class="number" id="statKeluar">0</div></div>
+                </div>
+                <div class="stat-card wide">
+                    <div class="info"><h4>Supplier</h4><div class="number" id="statSupplier">0</div></div>
+                    <div class="icon" style="background: rgba(0, 195, 208, 0.16); color: #00c3d0;"><i class="fas fa-users"></i></div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-title"><i class="fas fa-chart-simple"></i> Ringkasan Stok Terkini</div>
+                <div class="table-responsive">
+                    <table>
+                        <thead><tr><th>No</th><th>Nama Barang</th><th>Kode Barang</th><th>Satuan</th><th>Jumlah</th></tr></thead>
+                        <tbody id="ringkasanStokBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== PAGE: BARANG MASUK ====== -->
+        <div class="page-section" id="page-barang-masuk">
+            <div class="page-header">
+                <h1><i class="fas fa-arrow-right"></i> Barang Masuk</h1>
+                <div class="user-badge"><i class="fas fa-user-circle"></i> Admin</div>
+            </div>
+
+            <div class="panel input-panel">
+                <div class="input-panel-header">
+                    <span>Input Barang</span>
+                    <button type="button" class="btn btn-primary btn-sm" id="toggleBarangMasukForm"><i class="fas fa-plus"></i> Tambah</button>
+                </div>
+                <div class="input-panel-body collapsed" id="barangMasukFormPanel">
+                    <form id="formBarangMasuk">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Nama Barang</label>
+                                <input type="text" id="bmNama" placeholder="Nama barang" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Kode Barang</label>
+                                <input type="text" id="bmKode" placeholder="Kode barang" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Supplier</label>
+                                <input type="text" id="bmSupplier" placeholder="Nama supplier" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Satuan</label>
+                                <select id="bmSatuan">
+                                    <option>Unit</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Tanggal</label>
+                                <input type="date" id="bmTanggal" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Jumlah</label>
+                                <input type="number" id="bmJumlah" placeholder="Jumlah" min="1" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-accent"><i class="fas fa-save"></i> Tambahkan</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-title"><i class="fas fa-list"></i> Data Barang Masuk</div>
+                <div class="table-responsive">
+                    <table>
+                        <thead><tr><th>No</th><th>Nama Barang</th><th>Kode Barang</th><th>Supplier</th><th>Satuan</th><th>Tanggal</th><th>Jumlah</th><th>Aksi</th></tr></thead>
+                        <tbody id="barangMasukBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== PAGE: BARANG KELUAR ====== -->
+        <div class="page-section" id="page-barang-keluar">
+            <div class="page-header">
+                <h1><i class="fas fa-arrow-right"></i> Barang Keluar</h1>
+                <div class="user-badge"><i class="fas fa-user-circle"></i> Admin</div>
+            </div>
+
+            <div class="panel input-panel">
+                <div class="input-panel-header">
+                    <span>Input Barang</span>
+                    <button type="button" class="btn btn-primary btn-sm" id="toggleBarangKeluarForm"><i class="fas fa-plus"></i> Tambah</button>
+                </div>
+                <div class="input-panel-body collapsed" id="barangKeluarFormPanel">
+                    <form id="formBarangKeluar">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Nama Barang</label>
+                                <input type="text" id="bkNama" placeholder="Nama barang" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Kode Barang</label>
+                                <input type="text" id="bkKode" placeholder="Kode barang" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Satuan</label>
+                                <select id="bkSatuan">
+                                    <option>Unit</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Tanggal</label>
+                                <input type="date" id="bkTanggal" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Jumlah</label>
+                                <input type="number" id="bkJumlah" placeholder="Jumlah" min="1" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-danger"><i class="fas fa-save"></i> Tambahkan</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-title"><i class="fas fa-list"></i> Data Barang Keluar</div>
+                <div class="table-responsive">
+                    <table>
+                        <thead><tr><th>No</th><th>Nama Barang</th><th>Kode Barang</th><th>Satuan</th><th>Tanggal</th><th>Jumlah</th><th>Aksi</th></tr></thead>
+                        <tbody id="barangKeluarBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== PAGE: SUPPLIER ====== -->
+        <div class="page-section" id="page-supplier">
+            <div class="page-header">
+                <h1><i class="fas fa-user-friends"></i> Supplier</h1>
+                <div class="user-badge"><i class="fas fa-user-circle"></i> Admin</div>
+            </div>
+
+            <div class="panel input-panel">
+                <div class="input-panel-header">
+                    <span>Input Supplier</span>
+                    <button type="button" class="btn btn-primary btn-sm" id="toggleSupplierForm"><i class="fas fa-plus"></i> Tambah</button>
+                </div>
+                <div class="input-panel-body collapsed" id="supplierFormPanel">
+                    <form id="formSupplier">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Nama Supplier</label>
+                                <input type="text" id="supNama" placeholder="Nama supplier" required>
+                            </div>
+                            <div class="form-group">
+                                <label>No. Telepon</label>
+                                <input type="text" id="supTelepon" placeholder="Nomor telepon" required>
+                            </div>
+                            <div class="form-group" style="grid-column: 1 / -1;">
+                                <label>Alamat</label>
+                                <input type="text" id="supAlamat" placeholder="Alamat" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-accent"><i class="fas fa-save"></i> Simpan</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-title"><i class="fas fa-list"></i> Data Supplier</div>
+                <div class="table-responsive">
+                    <table>
+                        <thead><tr><th>No</th><th>Nama Supplier</th><th>Alamat</th><th>No. Telepon</th><th>Aksi</th></tr></thead>
+                        <tbody id="supplierBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== PAGE: LAPORAN ====== -->
+        <div class="page-section" id="page-laporan">
+            <div class="page-header">
+                <h1>Laporan Stok Barang <small>PT Wira Indo Teknik</small></h1>
+                <div class="user-badge"><i class="fas fa-user-circle"></i> Admin</div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-title"><i class="fas fa-filter"></i> Filter Laporan</div>
+                <div class="filter-bar">
+                    <div class="form-group">
+                        <label>Periode Mulai</label>
+                        <input type="date" id="lapStart" value="2026-01-01">
+                    </div>
+                    <div class="form-group">
+                        <label>s/d</label>
+                        <input type="date" id="lapEnd" value="2026-01-31">
+                    </div>
+                    <div class="form-group">
+                        <label>Tipe</label>
+                        <select id="lapTipe">
+                            <option value="semua">Semua</option>
+                            <option value="masuk">Barang Masuk</option>
+                            <option value="keluar">Barang Keluar</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-outline" id="filterLaporanBtn"><i class="fas fa-search"></i> Terapkan</button>
+                    <button class="btn btn-accent" id="exportPdfBtn"><i class="fas fa-file-pdf"></i> Export PDF</button>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-title"><i class="fas fa-table"></i> Stok Barang Terkini</div>
+                <div class="table-responsive">
+                    <table>
+                        <thead><tr><th>No</th><th>Nama Barang</th><th>Kode Barang</th><th>Satuan</th><th>Jumlah</th></tr></thead>
+                        <tbody id="laporanStokBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-title"><i class="fas fa-history"></i> Riwayat Transaksi</div>
+                <div class="table-responsive">
+                    <table>
+                        <thead><tr><th>No</th><th>Nama Barang</th><th>Kode Barang</th><th>Satuan</th><th>Jumlah</th><th>Ket</th><th>Tanggal</th></tr></thead>
+                        <tbody id="laporanRiwayatBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<div id="confirmOverlay" class="confirm-overlay" role="dialog" aria-modal="true" aria-labelledby="confirmMessage">
+    <div class="confirm-dialog">
+        <div class="confirm-icon"><i class="fas fa-exclamation-circle"></i></div>
+        <p id="confirmMessage">Apakah ada yakin menghapus nya?</p>
+        <div class="confirm-actions">
+            <button id="confirmYes" class="btn btn-danger">Iya</button>
+            <button id="confirmNo" class="btn btn-outline">Tidak</button>
+        </div>
+    </div>
+</div>
+
+<!-- Profile modal -->
+<div id="profileModal" class="confirm-overlay" aria-hidden="true">
+    <div class="confirm-dialog" role="dialog" aria-modal="true">
+        <h3 style="margin-top:0;">Profil Saya</h3>
+        <div style="text-align:left; margin-top:12px;">
+            <label>Nama</label>
+            <input id="profileName" style="width:100%; padding:8px; margin:6px 0 12px;" />
+            <label>Email</label>
+            <input id="profileEmail" style="width:100%; padding:8px; margin:6px 0 12px;" />
+        </div>
+        <div class="confirm-actions">
+            <button id="profileSave" class="btn btn-accent">Simpan</button>
+            <button id="profileCancel" class="btn btn-outline">Batal</button>
+        </div>
+    </div>
+</div>
+
+<!-- Change password modal -->
+<div id="pwdModal" class="confirm-overlay" aria-hidden="true">
+    <div class="confirm-dialog" role="dialog" aria-modal="true">
+        <h3 style="margin-top:0;">Ubah Password</h3>
+        <div style="text-align:left; margin-top:12px;">
+            <label>Password Lama</label>
+            <input id="oldPwd" type="password" style="width:100%; padding:8px; margin:6px 0 12px;" />
+            <label>Password Baru</label>
+            <input id="newPwd" type="password" style="width:100%; padding:8px; margin:6px 0 12px;" />
+            <label>Konfirmasi Password</label>
+            <input id="confirmNewPwd" type="password" style="width:100%; padding:8px; margin:6px 0 12px;" />
+        </div>
+        <div class="confirm-actions">
+            <button id="pwdSave" class="btn btn-accent">Simpan</button>
+            <button id="pwdCancel" class="btn btn-outline">Batal</button>
+        </div>
+    </div>
+</div>
+
+<!-- Settings modal -->
+<div id="settingsModal" class="confirm-overlay" aria-hidden="true">
+    <div class="confirm-dialog" role="dialog" aria-modal="true">
+        <h3 style="margin-top:0;">Pengaturan Aplikasi</h3>
+        <div style="text-align:left; margin-top:12px;">
+            <label>Nama Perusahaan</label>
+            <input id="settingCompany" style="width:100%; padding:8px; margin:6px 0 12px;" />
+
+            <label>Warna Tema</label>
+            <select id="settingTheme" style="width:100%; padding:8px; margin:6px 0 12px;">
+                <option value="teal">Teal (default)</option>
+                <option value="blue">Blue</option>
+                <option value="green">Green</option>
+                <option value="purple">Purple</option>
+            </select>
+
+            <label style="display:flex; align-items:center; gap:8px;"><input type="checkbox" id="settingPersist" /> Simpan data di localStorage</label>
+        </div>
+        <div class="confirm-actions">
+            <button id="settingsSave" class="btn btn-accent">Simpan</button>
+            <button id="settingsCancel" class="btn btn-outline">Batal</button>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- JAVASCRIPT -->
+<!-- ============================================================ -->
+<script src="app.js"></script>

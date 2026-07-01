@@ -1,0 +1,110 @@
+{
+  "barangMasuk": [
+    {
+      "id": 1,
+      "nama": "Copeland ZR36",
+      "kode": "AC-0001",
+      "supplier": "PT. WISMA 77",
+      "satuan": "Unit",
+      "tanggal": "2026-01-01",
+      "jumlah": 5
+    },
+    {
+      "id": 2,
+      "nama": "Copeland ZR47",
+      "kode": "AC-0002",
+      "supplier": "PT. WISMA 77",
+      "satuan": "Unit",
+      "tanggal": "2026-01-01",
+      "jumlah": 5
+    },
+    {
+      "id": 3,
+      "nama": "Copeland ZR61",
+      "kode": "AC-0003",
+      "supplier": "PT. WISMA 77",
+      "satuan": "Unit",
+      "tanggal": "2026-01-01",
+      "jumlah": 5
+    },
+    {
+      "id": 4,
+      "nama": "Copeland ZR81",
+      "kode": "AC-0004",
+      "supplier": "PT. WISMA 77",
+      "satuan": "Unit",
+      "tanggal": "2026-01-01",
+      "jumlah": 5
+    },
+    {
+      "id": 5,
+      "nama": "Kulthorn AE2410Y",
+      "kode": "KLS-0002",
+      "supplier": "PT. BMC",
+      "satuan": "Unit",
+      "tanggal": "2026-01-01",
+      "jumlah": 5
+    }
+  ],
+  "barangKeluar": [
+    {
+      "id": 1,
+      "nama": "Copeland ZR36",
+      "kode": "AC-0001",
+      "satuan": "Unit",
+      "tanggal": "2026-01-20",
+      "jumlah": 2
+    },
+    {
+      "id": 2,
+      "nama": "Copeland ZR47",
+      "kode": "AC-0002",
+      "satuan": "Unit",
+      "tanggal": "2026-01-15",
+      "jumlah": 2
+    },
+    {
+      "id": 3,
+      "nama": "Copeland ZR61",
+      "kode": "AC-0003",
+      "satuan": "Unit",
+      "tanggal": "2026-01-11",
+      "jumlah": 5
+    },
+    {
+      "id": 4,
+      "nama": "Copeland ZR81",
+      "kode": "AC-0004",
+      "satuan": "Unit",
+      "tanggal": "2026-01-11",
+      "jumlah": 2
+    },
+    {
+      "id": 5,
+      "nama": "Kulthorn AE4440Y",
+      "kode": "KLS-0003",
+      "satuan": "Unit",
+      "tanggal": "2026-01-10",
+      "jumlah": 2
+    }
+  ],
+  "supplier": [
+    {
+      "id": 1,
+      "nama": "PT. BMC",
+      "alamat": "Mangga Besar, Jakarta",
+      "telepon": "021-111-222"
+    },
+    {
+      "id": 2,
+      "nama": "PT. TIRIS INDO",
+      "alamat": "Glodok, Jakarta",
+      "telepon": "021-222-333"
+    }
+  ],
+  "nextId": {
+    "masuk": 6,
+    "keluar": 6,
+    "supplier": 3
+  }
+}
