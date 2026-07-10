@@ -78,6 +78,15 @@ switch ($action) {
             exit;
         }
 
+        // Prevent duplicate kode in barang_masuk
+        $exists = $pdo->prepare("SELECT COUNT(*) FROM barang_masuk WHERE kode = ?");
+        $exists->execute([$input['kode']]);
+        if (intval($exists->fetchColumn()) > 0) {
+            http_response_code(400);
+            echo json_encode(['error' => 'Kode barang sudah ada di data barang masuk.']);
+            exit;
+        }
+
         $stmt = $pdo->prepare("INSERT INTO barang_masuk (nama, kode, supplier, satuan, tanggal, jumlah) VALUES (?, ?, ?, ?, ?, ?)");
         $stmt->execute([
             $input['nama'],
@@ -97,6 +106,15 @@ switch ($action) {
             exit;
         }
 
+        // Prevent duplicate kode in barang_keluar
+        $exists = $pdo->prepare("SELECT COUNT(*) FROM barang_keluar WHERE kode = ?");
+        $exists->execute([$input['kode']]);
+        if (intval($exists->fetchColumn()) > 0) {
+            http_response_code(400);
+            echo json_encode(['error' => 'Kode barang sudah ada di data barang keluar.']);
+            exit;
+        }
+
         $stmt = $pdo->prepare("INSERT INTO barang_keluar (nama, kode, satuan, tanggal, jumlah) VALUES (?, ?, ?, ?, ?)");
         $stmt->execute([
             $input['nama'],
@@ -109,17 +127,21 @@ switch ($action) {
         exit;
 
     case 'supplier':
-        if (empty($input['nama']) || empty($input['alamat']) || empty($input['telepon'])) {
+        // Allow creating supplier with only a name. alamat and telepon are optional.
+        if (empty($input['nama'])) {
             http_response_code(400);
-            echo json_encode(['error' => 'Nama, alamat, dan telepon wajib diisi.']);
+            echo json_encode(['error' => 'Nama supplier wajib diisi.']);
             exit;
         }
+
+        $alamat = $input['alamat'] ?? '';
+        $telepon = $input['telepon'] ?? '';
 
         $stmt = $pdo->prepare("INSERT INTO supplier (nama, alamat, telepon) VALUES (?, ?, ?)");
         $stmt->execute([
             $input['nama'],
-            $input['alamat'],
-            $input['telepon']
+            $alamat,
+            $telepon
         ]);
         echo json_encode(fetchData($pdo));
         exit;

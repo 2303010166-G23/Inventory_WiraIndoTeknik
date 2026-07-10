@@ -602,6 +602,20 @@ document.addEventListener('DOMContentLoaded', function() {
             showToast('Mohon lengkapi data!', 'warning');
             return;
         }
+        // If supplier is new, create it automatically with empty alamat/telepon
+        if (!data.supplier.some(s => s.nama === newItem.supplier)) {
+            const ok = await saveEntity('supplier', { nama: newItem.supplier, alamat: '', telepon: '' });
+            if (!ok) {
+                showToast('Gagal membuat supplier otomatis. Silakan tambahkan supplier secara manual.', 'error');
+                return;
+            }
+            showToast('Supplier baru dibuat otomatis. Lengkapi alamat dan telepon di halaman Supplier.', 'info');
+        }
+        // Prevent duplicate kode on client-side for faster feedback
+        if (data.barangMasuk.some(b => b.kode === newItem.kode)) {
+            showToast('Kode barang sudah ada di data barang masuk.', 'error');
+            return;
+        }
         const success = await saveEntity('barangMasuk', newItem);
         if (!success) return;
 
@@ -635,6 +649,11 @@ document.addEventListener('DOMContentLoaded', function() {
         };
         if (!newItem.nama || !newItem.kode) {
             showToast('Mohon lengkapi data!', 'warning');
+            return;
+        }
+        // Prevent duplicate kode on client-side for barang keluar
+        if (data.barangKeluar.some(b => b.kode === newItem.kode)) {
+            showToast('Kode barang sudah ada di data barang keluar.', 'error');
             return;
         }
         const success = await saveEntity('barangKeluar', newItem);
