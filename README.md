@@ -46,7 +46,16 @@ Jika Anda menggunakan konfigurasi MySQL lain, sesuaikan nilai di bagian atas fil
 - [app.js](app.js) — logika frontend aplikasi
 - [api.php](api.php) — endpoint backend untuk mengakses data dari MySQL
 - [database.sql](database.sql) — skema tabel dan data awal
+- [database-baru.sql](database-baru.sql) — script SQL baru untuk database inventaris_tb_master
+- [database-inventaris.sql](database-inventaris.sql) — script SQL baru untuk database inventaris_tb
 - [data.json](data.json) — data pendukung proyek
+
+## Perubahan Terbaru
+- Supplier baru otomatis dibuat saat menambahkan barang masuk dengan nama supplier baru.
+- Alamat dan telepon supplier sekarang bersifat opsional saat membuat supplier.
+- Pengecekan duplikat `kode` ditambahkan untuk `barang_masuk` dan `barang_keluar` di frontend dan backend.
+- Input `jumlah` pada barang masuk sekarang mendukung angka negatif.
+- Ditambahkan dua file SQL baru untuk impor database yang lebih fleksibel.
 
 ## Catatan
 - Aplikasi ini dibuat untuk kebutuhan lokal dan belum menggunakan framework backend penuh.
